@@ -1,3 +1,4 @@
+import 'package:ecommerce_flutter/core/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextFieldScreen extends StatelessWidget {
@@ -12,10 +13,8 @@ class CustomTextFieldScreen extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
           hintText: hintText,
-          enabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(width: 2, color: Colors.purple)),
-          focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide(width: 2, color: Colors.purple))),
+          enabledBorder: AppConstants.textFieldInputBorder,
+          focusedBorder: AppConstants.textFieldInputBorder),
     );
   }
 }

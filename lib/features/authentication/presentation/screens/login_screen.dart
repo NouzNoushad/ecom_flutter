@@ -1,21 +1,22 @@
-import 'package:ecommerce_flutter/screens/login_screen.dart';
-import 'package:ecommerce_flutter/screens/widgets/custom_text_field.dart';
+import 'package:ecommerce_flutter/features/authentication/presentation/screens/register_screen.dart';
+import 'package:ecommerce_flutter/features/authentication/presentation/widgets/custom_text_field.dart';
+import 'package:ecommerce_flutter/core/utils/colors.dart';
 import 'package:flutter/material.dart';
 
-class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorPicker.backgroundColor,
       body: SafeArea(
         child: Center(
           child: ListView(
@@ -24,25 +25,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
               children: [
                 const SizedBox(
                   height: 20,
-                ),
-                const Center(
-                  child: CircleAvatar(
-                    radius: 70,
-                    backgroundColor: Colors.purple,
-                    child: Icon(
-                      Icons.person,
-                      color: Colors.white,
-                      size: 100,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                CustomTextFieldScreen(
-                    hintText: 'username', controller: nameController),
-                const SizedBox(
-                  height: 8,
                 ),
                 CustomTextFieldScreen(
                     hintText: 'email', controller: nameController),
@@ -56,11 +38,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: TextButton(
                       onPressed: () {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const LoginScreen()));
+                            builder: (context) => const RegisterScreen()));
                       },
                       child: const Text(
-                        'Already have an account? Login',
-                        style: TextStyle(color: Colors.purple),
+                        "Don't have an account? Register",
+                        style: TextStyle(color: ColorPicker.primaryColor),
                       )),
                 ),
                 const SizedBox(
@@ -71,10 +53,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: ElevatedButton(
                         onPressed: () {},
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.purple,
+                          backgroundColor: ColorPicker.primaryColor,
                         ),
                         child: Text(
-                          'Register'.toUpperCase(),
+                          'Login'.toUpperCase(),
                           style: const TextStyle(
                               fontSize: 15, fontWeight: FontWeight.w500),
                         )))
