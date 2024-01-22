@@ -11,6 +11,7 @@ class CustomTextFieldScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
+      style: const TextStyle(decorationThickness: 0),
       decoration: InputDecoration(
           hintText: hintText,
           enabledBorder: AppConstants.textFieldInputBorder,

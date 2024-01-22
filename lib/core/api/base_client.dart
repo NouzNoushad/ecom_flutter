@@ -1,6 +1,7 @@
 import 'package:ecommerce_flutter/core/api/api_consumer.dart';
 import 'package:ecommerce_flutter/core/api/error_handler.dart';
 import 'package:ecommerce_flutter/core/api/status_code.dart';
+import 'package:ecommerce_flutter/core/utils/constants.dart';
 import 'package:http/http.dart';
 
 class BaseClient extends ApiConsumer {
@@ -46,7 +47,8 @@ class BaseClient extends ApiConsumer {
         response.statusCode == StatusCode.created) {
       responseBody = response.body;
     } else {
-      ErrorHandler.handleResponse(response);
+      logger('error response', response.body);
+      // ErrorHandler.handleResponse(response);
     }
     return responseBody;
   }

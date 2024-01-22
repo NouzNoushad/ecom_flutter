@@ -1,11 +1,14 @@
+import 'dart:convert';
+
 import 'package:ecommerce_flutter/core/api/api_consumer.dart';
+import 'package:ecommerce_flutter/core/utils/constants.dart';
 import 'package:ecommerce_flutter/core/utils/endpoints.dart';
 import 'package:http/http.dart' as http;
 import 'package:ecommerce_flutter/features/authentication/models/user_model.dart';
 
 abstract class AuthRemoteDataSource {
   registerUser(UserModel user);
-  loginUser();
+  loginUser(String email, String password);
   logoutUser();
 }
 
@@ -14,15 +17,19 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
   final ApiConsumer apiConsumer;
 
   @override
-  loginUser() {
-    // TODO: implement loginUser
-    throw UnimplementedError();
+  Future<String> loginUser(String email, String password) async {
+    String url = "${Endpoints.baseUrl}/${Endpoints.login}";
+    Map<String, dynamic> body = {
+      "email": email,
+      "password": password,
+    };
+    String response = await apiConsumer.postResponse(url, jsonEncode(body));
+    return response;
   }
 
   @override
   logoutUser() {
     // TODO: implement logoutUser
-    throw UnimplementedError();
   }
 
   @override
@@ -40,7 +47,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
     request.fields['password'] = user.password;
 
     http.StreamedResponse response = await request.send();
-
-    print(response.statusCode);
+    var res = await http.Response.fromStream(response);
+    print(res.body);
   }
 }
