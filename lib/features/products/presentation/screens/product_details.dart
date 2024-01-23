@@ -1,6 +1,7 @@
 import 'package:ecommerce_flutter/config/routes/route_constant.dart';
 import 'package:ecommerce_flutter/core/utils/colors.dart';
 import 'package:ecommerce_flutter/core/utils/extensions.dart';
+
 import 'package:ecommerce_flutter/features/products/model/single_product_response.dart';
 import 'package:ecommerce_flutter/features/products/presentation/products_bloc/products_bloc.dart';
 import 'package:flutter/material.dart';
@@ -36,12 +37,6 @@ class _ProductDetailsState extends State<ProductDetails> {
           icon: const Icon(Icons.arrow_back),
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {},
-          backgroundColor: ColorPicker.primaryColor,
-          label: const Text(
-            'Add to Cart',
-          )),
       body: WillPopScope(
         onWillPop: () async {
           Navigator.of(context).pushReplacementNamed(RouteConstants.products);
@@ -56,60 +51,66 @@ class _ProductDetailsState extends State<ProductDetails> {
             }
             if (state is SingleProductLoadedState) {
               final Product product = state.product;
-              return ListView(
+              return Stack(
                 children: [
-                  SizedBox(
-                    height: context.height * 0.4,
-                    child: Image.network(product.thumbnail),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                  Expanded(
+                    child: ListView(
                       children: [
-                        Text(
-                          product.title,
-                          maxLines: 2,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
+                        SizedBox(
+                          height: context.height * 0.4,
+                          child: Image.network(product.thumbnail),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                product.title,
+                                maxLines: 2,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                product.brand,
+                                maxLines: 1,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                '\$${product.price}',
+                                style: const TextStyle(
+                                  color: ColorPicker.priceTextColor,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                product.description,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          product.brand,
-                          maxLines: 1,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          '\$${product.price}',
-                          style: const TextStyle(
-                            color: ColorPicker.priceTextColor,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          product.description,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
+                        )
                       ],
                     ),
-                  )
+                  ),
                 ],
               );
             }

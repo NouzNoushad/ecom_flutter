@@ -7,4 +7,6 @@ class Endpoints {
   // products
   static const String products = "products/get_products";
   static const String product = "products/get_product";
+  // carts
+  static const String create = "carts/create_cart";
 }
