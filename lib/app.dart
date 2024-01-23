@@ -1,6 +1,6 @@
 import 'package:ecommerce_flutter/config/routes/app_routes.dart';
 import 'package:ecommerce_flutter/config/routes/route_constant.dart';
-import 'package:ecommerce_flutter/features/authentication/presentation/cubit/cubit_widget.dart';
+import 'package:ecommerce_flutter/core/widget/bloc_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'config/theme/app_theme.dart';
@@ -11,12 +11,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CubitWidget(
+    return BlocWidget(
       child: MaterialApp(
         theme: appTheme,
         debugShowCheckedModeBanner: false,
         home: const LoginScreen(),
-        initialRoute: RouteConstants.login,
+        initialRoute: RouteConstants.splash,
         onGenerateRoute: AppRoutes.onGenerateRoute,
       ),
     );

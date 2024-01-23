@@ -1,5 +1,4 @@
 import 'package:ecommerce_flutter/core/api/api_consumer.dart';
-import 'package:ecommerce_flutter/core/api/error_handler.dart';
 import 'package:ecommerce_flutter/core/api/status_code.dart';
 import 'package:ecommerce_flutter/core/utils/constants.dart';
 import 'package:http/http.dart';
@@ -18,21 +17,25 @@ class BaseClient extends ApiConsumer {
         response.statusCode == StatusCode.created) {
       responseBody = response.body;
     } else {
-      ErrorHandler.handleResponse(response);
+      logger('error response', response.body);
+      // ErrorHandler.handleResponse(response);
     }
     return responseBody;
   }
 
   @override
-  Future<String> getResponse(String url) async {
+  Future<String> getResponse(String url,
+      [Map<String, String>? baseHeader]) async {
     Uri uri = Uri.parse(url);
     String responseBody = "";
-    Response response = await baseClient.get(uri, headers: headers);
+    Response response =
+        await baseClient.get(uri, headers: baseHeader ?? headers);
     if (response.statusCode == StatusCode.ok ||
         response.statusCode == StatusCode.created) {
       responseBody = response.body;
     } else {
-      ErrorHandler.handleResponse(response);
+      logger('error response', response.body);
+      // ErrorHandler.handleResponse(response);
     }
     return responseBody;
   }
@@ -63,7 +66,8 @@ class BaseClient extends ApiConsumer {
         response.statusCode == StatusCode.created) {
       responseBody = response.body;
     } else {
-      ErrorHandler.handleResponse(response);
+      logger('error response', response.body);
+      // ErrorHandler.handleResponse(response);
     }
     return responseBody;
   }

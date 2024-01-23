@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:ecommerce_flutter/core/api/api_consumer.dart';
 import 'package:ecommerce_flutter/core/utils/constants.dart';
 import 'package:ecommerce_flutter/core/utils/endpoints.dart';
+import 'package:ecommerce_flutter/core/utils/strings.dart';
 import 'package:http/http.dart' as http;
 import 'package:ecommerce_flutter/features/authentication/models/user_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class AuthRemoteDataSource {
   registerUser(UserModel user);
@@ -28,8 +30,16 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
   }
 
   @override
-  logoutUser() {
-    // TODO: implement logoutUser
+  logoutUser() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String token = sharedPreferences.getString(AppStrings.token) ?? "";
+    Map<String, String> headers = {
+      "Content-Type": "application/json",
+      'Authorization': 'Bearer $token',
+    };
+    String url = '${Endpoints.baseUrl}/${Endpoints.logout}';
+    String response = await apiConsumer.getResponse(url, headers);
+    logger('logout response', response);
   }
 
   @override

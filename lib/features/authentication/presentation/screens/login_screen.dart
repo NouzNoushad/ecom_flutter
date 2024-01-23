@@ -1,9 +1,12 @@
+import 'package:ecommerce_flutter/core/utils/extensions.dart';
 import 'package:ecommerce_flutter/features/authentication/presentation/cubit/auth_cubit/auth_cubit.dart';
 import 'package:ecommerce_flutter/features/authentication/presentation/screens/register_screen.dart';
 import 'package:ecommerce_flutter/features/authentication/presentation/widgets/custom_text_field.dart';
 import 'package:ecommerce_flutter/core/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../products/presentation/screens/products_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -57,23 +60,25 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(
                         height: 50,
                         child: ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async {
                               String email = emailController.text.trim();
                               String password = passwordController.text.trim();
                               if (email != "" && password != "") {
-                                context
+                                bool response = await context
                                     .read<AuthCubit>()
                                     .loginUser(email, password);
+                                if (response) {
+                                  if (!mounted) return;
+                                  context.snackBar('Successfully logged in');
+                                  Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ProductsScreen()));
+                                }
                                 emailController.clear();
                                 passwordController.clear();
                               } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        backgroundColor:
-                                            ColorPicker.primaryDarkColor,
-                                        content: Text(
-                                          'All fields are required',
-                                        )));
+                                context.snackBar('All Fields are required');
                               }
                             },
                             style: ElevatedButton.styleFrom(

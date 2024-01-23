@@ -8,3 +8,6 @@ class AppConstants {
 
 void logger(String message, dynamic log) =>
     print('///////////=>>>> $message: $log');
+
+void printWrapped(String text) =>
+    RegExp('.{1,800}').allMatches(text).map((m) => m.group(0)).forEach(print);

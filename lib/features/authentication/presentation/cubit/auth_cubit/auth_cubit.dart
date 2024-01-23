@@ -1,8 +1,12 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:ecommerce_flutter/core/utils/strings.dart';
+import 'package:ecommerce_flutter/features/authentication/models/login_response.dart';
 import 'package:equatable/equatable.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../core/utils/constants.dart';
 import '../../../data_source/remote_data_source.dart';
@@ -35,8 +39,18 @@ class AuthCubit extends Cubit<AuthState> {
     emit(state.copyWith(imageFile: imageFile));
   }
 
-  loginUser(String email, String password) async {
+  Future<bool> loginUser(String email, String password) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String response = await authRemoteDataSource.loginUser(email, password);
     logger('login response', response);
+    var loginResponse = LoginResponse.fromJson(jsonDecode(response));
+    sharedPreferences.setString(AppStrings.token, loginResponse.token ?? '');
+    return true;
+  }
+
+  logoutUser() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    await authRemoteDataSource.logoutUser();
+    sharedPreferences.remove(AppStrings.token);
   }
 }
