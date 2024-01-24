@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class ProfileDataSource {
   getUserProfile();
+  updateProfile(String username, String email, String id);
 }
 
 class ProfileDataSourceImpl extends ProfileDataSource {
@@ -26,6 +27,22 @@ class ProfileDataSourceImpl extends ProfileDataSource {
       ProfileResponse profileResponse =
           ProfileResponse.fromJson(jsonDecode(response));
       return profileResponse.data;
+    }
+    return null;
+  }
+
+  @override
+  updateProfile(String username, String email, String id) async {
+    String url = "${Endpoints.baseUrl}/${Endpoints.profileUpdate}/$id";
+    Map<String, dynamic> profile = {
+      'username': username,
+      'email': email,
+    };
+    String response =
+        await apiConsumer.updateResponse(url, jsonEncode(profile));
+    if (response != "") {
+      logger('profile update', response);
+      return jsonDecode(response)['message'];
     }
     return null;
   }

@@ -13,6 +13,11 @@ class GetProfileState extends ProfileState {
   final Data? profileData;
 }
 
+class UpdateProfileState extends ProfileState {
+  UpdateProfileState(this.message);
+  final String message;
+}
+
 class ProfileErrorState extends ProfileState {
   ProfileErrorState(this.error);
   final String error;

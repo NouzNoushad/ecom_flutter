@@ -14,4 +14,5 @@ class Endpoints {
   static const String deleteCart = "carts/delete_cart";
   // profile
   static const String profile = "profile/get_profile";
+  static const String profileUpdate = "profile/update_profile";
 }

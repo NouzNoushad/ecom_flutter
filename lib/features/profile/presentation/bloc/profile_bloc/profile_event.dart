@@ -7,3 +7,10 @@ sealed class ProfileEvent {
 class GetProfileEvent extends ProfileEvent {
   GetProfileEvent();
 }
+
+class UpdateProfileEvent extends ProfileEvent {
+  UpdateProfileEvent(this.username, this.email, this.id);
+  final String username;
+  final String email;
+  final String id;
+}

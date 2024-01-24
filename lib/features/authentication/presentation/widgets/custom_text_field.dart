@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 
 class CustomTextFieldScreen extends StatelessWidget {
   const CustomTextFieldScreen(
-      {super.key, required this.hintText, required this.controller});
-  final String hintText;
+      {super.key, this.hintText, this.label, required this.controller});
+  final String? hintText;
+  final String? label;
   final TextEditingController controller;
 
   @override
@@ -12,7 +13,13 @@ class CustomTextFieldScreen extends StatelessWidget {
     return TextField(
       controller: controller,
       style: const TextStyle(decorationThickness: 0),
+      onTapOutside: (event) {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       decoration: InputDecoration(
+          floatingLabelBehavior: FloatingLabelBehavior.never,
+          labelText: label ?? hintText!,
+          labelStyle: const TextStyle(color: Colors.black),
           hintText: hintText,
           enabledBorder: AppConstants.textFieldInputBorder,
           focusedBorder: AppConstants.textFieldInputBorder),

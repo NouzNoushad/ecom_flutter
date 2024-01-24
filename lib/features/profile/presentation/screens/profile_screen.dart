@@ -1,3 +1,4 @@
+import 'package:ecommerce_flutter/core/utils/constants.dart';
 import 'package:ecommerce_flutter/core/utils/endpoints.dart';
 import 'package:ecommerce_flutter/core/utils/extensions.dart';
 import 'package:ecommerce_flutter/features/authentication/presentation/cubit/auth_cubit/auth_cubit.dart';
@@ -44,7 +45,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
       body: SafeArea(
-        child: BlocBuilder<ProfileBloc, ProfileState>(
+        child: BlocConsumer<ProfileBloc, ProfileState>(
+          listener: (context, state) {
+            if (state is UpdateProfileState) {
+              context.snackBar(state.message);
+            }
+          },
           builder: (context, state) {
             if (state is ProfileLoadingState) {
               return const Center(
@@ -79,13 +85,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         height: 30,
                       ),
                       CustomTextFieldScreen(
-                          hintText: '${profile?.username}',
+                          label: '${profile?.username}',
                           controller: nameController),
                       const SizedBox(
                         height: 8,
                       ),
                       CustomTextFieldScreen(
-                          hintText: '${profile?.email}',
+                          label: '${profile?.email}',
                           controller: emailController),
                       const SizedBox(
                         height: 30,
@@ -93,7 +99,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       SizedBox(
                           height: 50,
                           child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                String username = nameController.text.isNotEmpty
+                                    ? nameController.text.trim()
+                                    : profile!.username;
+                                String email = emailController.text.isNotEmpty
+                                    ? emailController.text.trim()
+                                    : profile!.email;
+
+                                context.read<ProfileBloc>().add(
+                                    UpdateProfileEvent(
+                                        username, email, profile!.id));
+                              },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: ColorPicker.primaryColor,
                               ),

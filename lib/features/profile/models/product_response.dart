@@ -28,23 +28,27 @@ class ProfileResponse {
 }
 
 class Data {
+  String id;
   String username;
   String email;
   String image;
 
   Data({
+    required this.id,
     required this.username,
     required this.email,
     required this.image,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
+        id: json["id"],
         username: json["username"],
         email: json["email"],
         image: json["image"],
       );
 
   Map<String, dynamic> toJson() => {
+        "id": id,
         "username": username,
         "email": email,
         "image": image,
