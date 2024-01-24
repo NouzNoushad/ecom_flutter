@@ -1,13 +1,8 @@
 import 'package:ecommerce_flutter/config/routes/route_constant.dart';
 import 'package:ecommerce_flutter/core/utils/colors.dart';
-import 'package:ecommerce_flutter/core/utils/constants.dart';
-import 'package:ecommerce_flutter/core/utils/extensions.dart';
-import 'package:ecommerce_flutter/features/authentication/presentation/screens/login_screen.dart';
 import 'package:ecommerce_flutter/features/products/presentation/products_bloc/products_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../authentication/presentation/cubit/auth_cubit/auth_cubit.dart';
 import '../../model/products_response.dart';
 
 class ProductsScreen extends StatefulWidget {
@@ -32,16 +27,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
         backgroundColor: ColorPicker.primaryColor,
         title: const Text('Products'),
         automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-              onPressed: () {
-                context.read<AuthCubit>().logoutUser();
-                context.snackBar('Successfully logged out');
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => const LoginScreen()));
-              },
-              icon: const Icon(Icons.logout)),
-        ],
       ),
       body: BlocBuilder<ProductsBloc, ProductsState>(
         builder: (context, state) {

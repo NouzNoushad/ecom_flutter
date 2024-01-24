@@ -2,9 +2,11 @@ import 'package:ecommerce_flutter/core/api/base_client.dart';
 import 'package:ecommerce_flutter/features/authentication/data_source/remote_data_source.dart';
 import 'package:ecommerce_flutter/features/bottom_nav/bottom_nav_cubit/bottom_nav_cubit.dart';
 import 'package:ecommerce_flutter/features/carts/data_source/cart_data_source.dart';
-import 'package:ecommerce_flutter/features/carts/presentation/cubit/cart_cubit/cart_cubit.dart';
+import 'package:ecommerce_flutter/features/carts/presentation/bloc/cart_bloc/cart_bloc.dart';
 import 'package:ecommerce_flutter/features/products/data_source/products_data_source.dart';
 import 'package:ecommerce_flutter/features/products/presentation/products_bloc/products_bloc.dart';
+import 'package:ecommerce_flutter/features/profile/data_source/profile_data_source.dart';
+import 'package:ecommerce_flutter/features/profile/presentation/bloc/profile_bloc/profile_bloc.dart';
 import 'package:ecommerce_flutter/features/splash/splash_cubit/splash_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,8 +38,13 @@ class BlocWidget extends StatelessWidget {
                   ProductDataSourceImpl(apiConsumer: BaseClient())),
         ),
         BlocProvider(
-          create: (context) => CartCubit(
+          create: (context) => CartBloc(
             cartDartSource: CartDartSourceImpl(apiConsumer: BaseClient()),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => ProfileBloc(
+            profileDataSource: ProfileDataSourceImpl(apiConsumer: BaseClient()),
           ),
         ),
       ],

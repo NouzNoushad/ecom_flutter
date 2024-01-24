@@ -8,7 +8,7 @@ class BaseClient extends ApiConsumer {
   Map<String, String> headers = {"Content-Type": "application/json"};
 
   @override
-  Future<String> deleteResponse(String url, Object? body) async {
+  Future<String> deleteResponse(String url, [Object? body]) async {
     Uri uri = Uri.parse(url);
     String responseBody = "";
     Response response =

@@ -19,14 +19,17 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
   final ApiConsumer apiConsumer;
 
   @override
-  Future<String> loginUser(String email, String password) async {
+  Future<String?> loginUser(String email, String password) async {
     String url = "${Endpoints.baseUrl}/${Endpoints.login}";
     Map<String, dynamic> body = {
       "email": email,
       "password": password,
     };
     String response = await apiConsumer.postResponse(url, jsonEncode(body));
-    return response;
+    if (response != "") {
+      return response;
+    }
+    return null;
   }
 
   @override
@@ -58,6 +61,6 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
 
     http.StreamedResponse response = await request.send();
     var res = await http.Response.fromStream(response);
-    print(res.body);
+    logger('response', res);
   }
 }

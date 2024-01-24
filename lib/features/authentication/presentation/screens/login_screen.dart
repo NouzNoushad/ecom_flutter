@@ -3,10 +3,9 @@ import 'package:ecommerce_flutter/features/authentication/presentation/cubit/aut
 import 'package:ecommerce_flutter/features/authentication/presentation/screens/register_screen.dart';
 import 'package:ecommerce_flutter/features/authentication/presentation/widgets/custom_text_field.dart';
 import 'package:ecommerce_flutter/core/utils/colors.dart';
+import 'package:ecommerce_flutter/features/bottom_nav/bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../products/presentation/screens/products_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -73,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const ProductsScreen()));
+                                              const BottomNavScreen()));
                                 }
                                 emailController.clear();
                                 passwordController.clear();

@@ -4,6 +4,7 @@ import 'package:ecommerce_flutter/features/authentication/presentation/screens/r
 import 'package:ecommerce_flutter/features/bottom_nav/bottom_nav.dart';
 import 'package:ecommerce_flutter/features/products/presentation/screens/product_details.dart';
 import 'package:ecommerce_flutter/features/products/presentation/screens/products_screen.dart';
+import 'package:ecommerce_flutter/features/profile/presentation/screens/profile_screen.dart';
 import 'package:ecommerce_flutter/features/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -36,6 +37,10 @@ class AppRoutes {
             builder: (context) => ProductDetails(
                   productId: settings.arguments as int,
                 ));
+      case RouteConstants.profile:
+        return MaterialPageRoute(
+            settings: const RouteSettings(name: RouteConstants.profile),
+            builder: (context) => const ProfileScreen());
       default:
         return MaterialPageRoute(
             builder: (context) => const Scaffold(

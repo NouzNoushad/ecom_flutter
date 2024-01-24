@@ -41,11 +41,15 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<bool> loginUser(String email, String password) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    String response = await authRemoteDataSource.loginUser(email, password);
+    String? response = await authRemoteDataSource.loginUser(email, password);
     logger('login response', response);
-    var loginResponse = LoginResponse.fromJson(jsonDecode(response));
-    sharedPreferences.setString(AppStrings.token, loginResponse.token ?? '');
-    return true;
+    if (response != null) {
+      var loginResponse = LoginResponse.fromJson(jsonDecode(response));
+      sharedPreferences.setString(AppStrings.token, loginResponse.token ?? '');
+      sharedPreferences.setString(AppStrings.email, email);
+      return true;
+    }
+    return false;
   }
 
   logoutUser() async {

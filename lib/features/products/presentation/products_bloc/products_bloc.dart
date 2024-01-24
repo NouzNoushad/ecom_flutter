@@ -16,8 +16,10 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
       (event, emit) async {
         emit(ProductsLoadingState());
         try {
-          List<dynamic> products = await productDataSource.getProducts();
-          emit(ProductsLoadedState(products));
+          List<dynamic>? products = await productDataSource.getProducts();
+          if (products != null) {
+            emit(ProductsLoadedState(products));
+          }
         } catch (error) {
           emit(ProductsErrorState(error.toString()));
         }
@@ -28,7 +30,9 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
         emit(SingleProductLoadingState());
         try {
           dynamic product = await productDataSource.getSingleProduct(event.id);
-          emit(SingleProductLoadedState(product));
+          if (product != null) {
+            emit(SingleProductLoadedState(product));
+          }
         } catch (error) {
           emit(ProductsErrorState(error.toString()));
         }

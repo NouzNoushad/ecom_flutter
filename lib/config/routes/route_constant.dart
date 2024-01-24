@@ -5,4 +5,5 @@ class RouteConstants {
   static const String login = '/login';
   static const String products = '/products';
   static const String details = '/details';
+  static const String profile = '/profile';
 }

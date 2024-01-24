@@ -1,6 +1,8 @@
 import 'package:ecommerce_flutter/core/utils/colors.dart';
 import 'package:ecommerce_flutter/features/bottom_nav/bottom_nav_cubit/bottom_nav_cubit.dart';
+import 'package:ecommerce_flutter/features/carts/presentation/screens/cart_screen.dart';
 import 'package:ecommerce_flutter/features/products/presentation/screens/products_screen.dart';
+import 'package:ecommerce_flutter/features/profile/presentation/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,13 +19,9 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
       case 0:
         return const ProductsScreen();
       case 1:
-        return const Center(
-          child: Text('Cart'),
-        );
+        return const CartScreen();
       case 2:
-        return const Center(
-          child: Text('Profile'),
-        );
+        return const ProfileScreen();
       default:
         return Container();
     }
