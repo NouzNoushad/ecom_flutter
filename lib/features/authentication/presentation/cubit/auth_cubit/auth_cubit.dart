@@ -30,13 +30,17 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  registerUser(
+  Future<bool> registerUser(
       String username, String email, String password, File image) async {
     UserModel user = UserModel(
         username: username, email: email, password: password, image: image);
-    await authRemoteDataSource.registerUser(user);
-    imageFile = null;
-    emit(state.copyWith(imageFile: imageFile));
+    String? response = await authRemoteDataSource.registerUser(user);
+    if (response != null) {
+      imageFile = null;
+      emit(state.copyWith(imageFile: imageFile));
+      return true;
+    }
+    return false;
   }
 
   Future<bool> loginUser(String email, String password) async {

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:ecommerce_flutter/core/api/api_consumer.dart';
+import 'package:ecommerce_flutter/core/api/status_code.dart';
 import 'package:ecommerce_flutter/core/utils/constants.dart';
 import 'package:ecommerce_flutter/core/utils/endpoints.dart';
 import 'package:ecommerce_flutter/core/utils/strings.dart';
@@ -46,7 +47,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
   }
 
   @override
-  registerUser(UserModel user) async {
+  Future<String?> registerUser(UserModel user) async {
     var postUri = Uri.parse('${Endpoints.baseUrl}/${Endpoints.register}');
 
     http.MultipartRequest request = http.MultipartRequest("POST", postUri);
@@ -62,5 +63,10 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
     http.StreamedResponse response = await request.send();
     var res = await http.Response.fromStream(response);
     logger('response', res);
+    if (res.statusCode == StatusCode.ok ||
+        res.statusCode == StatusCode.created) {
+      return res.body;
+    }
+    return null;
   }
 }

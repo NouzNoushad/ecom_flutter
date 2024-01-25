@@ -3,12 +3,14 @@ import 'dart:io';
 import 'package:ecommerce_flutter/core/utils/extensions.dart';
 import 'package:ecommerce_flutter/features/authentication/presentation/cubit/auth_cubit/auth_cubit.dart';
 import 'package:ecommerce_flutter/features/authentication/presentation/screens/login_screen.dart';
-import 'package:ecommerce_flutter/features/authentication/presentation/widgets/custom_text_field.dart';
+import 'package:ecommerce_flutter/features/widgets/custom_text_field.dart';
 import 'package:ecommerce_flutter/core/utils/colors.dart';
-import 'package:ecommerce_flutter/features/authentication/presentation/widgets/image_picker.dart';
+import 'package:ecommerce_flutter/features/widgets/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../../../bottom_nav/bottom_nav.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -42,8 +44,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             child: CircleAvatar(
                               radius: 75,
                               backgroundColor: ColorPicker.primaryColor,
-                              child: context.read<AuthCubit>().imageFile !=
-                                      null
+                              child: context.read<AuthCubit>().imageFile != null
                                   ? Image.file(
                                       context.read<AuthCubit>().imageFile!,
                                       fit: BoxFit.cover,
@@ -108,21 +109,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     SizedBox(
                         height: 50,
                         child: ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async {
                               String username = nameController.text.trim();
                               String email = emailController.text.trim();
                               String password = passwordController.text.trim();
-                              File? image =
-                                  context.read<AuthCubit>().imageFile;
+                              File? image = context.read<AuthCubit>().imageFile;
                               if (username != "" &&
                                   email != "" &&
                                   password != "" &&
                                   image != null) {
-                                context.read<AuthCubit>().registerUser(
-                                    nameController.text.trim(),
-                                    emailController.text.trim(),
-                                    passwordController.text.trim(),
-                                    image);
+                                var response = await context
+                                    .read<AuthCubit>()
+                                    .registerUser(
+                                        username, email, password, image);
+                                if (response) {
+                                  if (!mounted) return;
+                                  context.snackBar(
+                                      'Account registered successfully');
+                                  Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const LoginScreen()));
+                                }
                                 nameController.clear();
                                 emailController.clear();
                                 passwordController.clear();
@@ -164,9 +172,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 children: [
                   ImagePickerContainer(
                       onTap: () {
-                        context
-                            .read<AuthCubit>()
-                            .pickImage(ImageSource.camera);
+                        context.read<AuthCubit>().pickImage(ImageSource.camera);
                         Navigator.pop(context);
                       },
                       icon: Icons.camera,

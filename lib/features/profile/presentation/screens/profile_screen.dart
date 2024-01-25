@@ -1,8 +1,7 @@
-import 'package:ecommerce_flutter/core/utils/constants.dart';
 import 'package:ecommerce_flutter/core/utils/endpoints.dart';
 import 'package:ecommerce_flutter/core/utils/extensions.dart';
 import 'package:ecommerce_flutter/features/authentication/presentation/cubit/auth_cubit/auth_cubit.dart';
-import 'package:ecommerce_flutter/features/authentication/presentation/widgets/custom_text_field.dart';
+import 'package:ecommerce_flutter/features/widgets/custom_text_field.dart';
 import 'package:ecommerce_flutter/core/utils/colors.dart';
 import 'package:ecommerce_flutter/features/profile/presentation/bloc/profile_bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
